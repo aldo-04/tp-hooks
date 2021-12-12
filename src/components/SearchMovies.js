@@ -13,8 +13,6 @@ function SearchMovies(){
 		}
 	)
 
-	console.log(movies)
-
 	// Credenciales de API
 	const apiKey = '79077a53'; // Intenta poner cualquier cosa antes para probar
 
@@ -22,10 +20,18 @@ function SearchMovies(){
 		fetch(`http://www.omdbapi.com/?s=${movies.keyword}&apikey=${apiKey}`)
 		.then(response => response.json())
 		.then(movieFound => { 
-			setMovies( {
-				...movies,
-				array: movieFound.Search
-			} )
+			if(movieFound.Response == "True"){
+				console.log("seteo peli")
+				setMovies( {
+					...movies,
+					array: movieFound.Search
+				} )
+			}else{
+				setMovies( {
+					array : [],
+					keyword: ""
+				} )
+			}
 		})
 	},[movies.keyword])
 
